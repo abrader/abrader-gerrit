@@ -44,12 +44,14 @@ class gerrit (
 	    ensure     => present,
 	    home       => $gerrit::params::home, 
 	    managehome => true,
+		before => File[$gerrit::params::home],
 	  }
 	  
 	  file { $gerrit::params::home :
   		owner => $gerrit::params::user,
   		group => $gerrit::params::group,
   		ensure => directory,
+		before => File[$gerrit::params::stage_dir],
 	  }
 	  
 	  # class { 'postgresql::server': }

@@ -8,7 +8,7 @@ description ''
 project_page 'https://code.google.com/p/gerrit/'
 
 ## Add dependencies, if any:
-# dependency 'username/name', '>= 1.2.0'
+
 dependency 'puppetlabs/apache', '>=0.11.0'
 dependency 'puppetlabs/java', '>=1.0.1'
 dependency 'seteam/tomcat', '>=0.1.0'

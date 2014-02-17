@@ -5,5 +5,6 @@ class gerrit::start {
 	  cwd       => $gerrit::params::home,
 	  command   => "${gerrit::params::init_script} restart",
 	  creates   => "${gerrit::params::home}/logs/gerrit.pid",
+	  require   => Exec["build_gerrit"],
     }
 }
