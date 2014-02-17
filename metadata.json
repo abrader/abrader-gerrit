@@ -1,0 +1,30 @@
+{
+  "name": "abrader-gerrit",
+  "version": "0.1.0",
+  "summary": "Gerrit Code Review",
+  "author": "Andrew Brader",
+  "description": "",
+  "dependencies": [
+    {
+      "name": "puppetlabs/apache",
+      "version_requirement": "\u003e\u003d0.11.0"
+    },
+    {
+      "name": "puppetlabs/java",
+      "version_requirement": "\u003e\u003d1.0.1"
+    },
+    {
+      "name": "seteam/tomcat",
+      "version_requirement": "\u003e\u003d0.1.0"
+    },
+    {
+      "name": "puppetlabs/postgresql",
+      "version_requirement": "\u003e\u003d3.3.0"
+    }
+  ],
+  "types": [],
+  "checksums": {},
+  "source": "https://gerrit-releases.storage.googleapis.com/",
+  "project_page": "https://code.google.com/p/gerrit/",
+  "license": ""
+}
