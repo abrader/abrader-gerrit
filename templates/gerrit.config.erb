@@ -1,0 +1,21 @@
+[gerrit]
+	basePath = git
+	canonicalWebUrl = http://<%= @fqdn %>:8080/
+[database]
+	type = postgresql
+	database = reviewdb
+	hostname = localhost
+	username = gerrit2
+[auth]
+	type = OPENID
+[sendemail]
+	smtpServer = localhost
+[container]
+	user = gerrit2
+	javaHome = /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.51.x86_64/jre
+[sshd]
+	listenAddress = *:29418
+[httpd]
+	listenUrl = http://*:8080/
+[cache]
+	directory = cache

@@ -1,15 +1,10 @@
 class gerrit::params {
-  # Gerrit version
-  $version = $::operatingsystem ? {
-    default => '2.8',
+  $user = $::operatingsystem ? {
+    default => 'gerrit2',
   }
   # Gerrit group 
   $group = $::operatingsystem ? {
-    default => 'gerrit',
-  }
-  # Gerrit username 
-  $user = $::operatingsystem ? {
-    default => 'gerrit',
+    default => 'gerrit2',
   }
   # Gerrit Groups 
   $groups = $::operatingsystem ? {
@@ -19,17 +14,26 @@ class gerrit::params {
   $home = $::operatingsystem ? {
     default => '/opt/gerrit',
   }
-  # Gerrit review_site home 
-  $site_name = $::operatingsystem ? {
-    default => 'review_site',
+  
+  $db_user = $::operatingsystem ? {
+    default => 'gerrit2'
   }
-  # type of Database storing configs of gerrit ['mysql' / 'pgsql' / 'h2']
+  
+  $db_pass = $::operatingsystem ? {
+    default => 'gerrit2'
+  }
+  
+  $db_name = $::operatingsystem ? {
+    default => 'reviewdb'
+  }
+  
   $database_type = $::operatingsystem ? {
-    default => 'pgsql',
+    default => 'postgresql'
+    #default => 'h2'
   }
   
   $war_file = $::operatingsystem ? {
-    default => 'gerrit-2.8.war'
+    default => 'gerrit-2.8.1.war'
   }
   
   $war_file_url = $::operatingsystem ? {
@@ -40,9 +44,11 @@ class gerrit::params {
     default => "${gerrit::params::home}/staging",
   }
   
-  $build_script = $::operatingsystem ? {
-    default => "/usr/bin/sudo -u ${gerrit::params::user} /usr/bin/java -jar ${gerrit::params::stage_dir}/${gerrit::params::war_file} init -d ${gerrit::params::home} --batch --no-auto-start"
-  }
+  # $build_script = $database_type ? {
+  #   postgresql => "/usr/bin/sudo -u ${gerrit::params::user} /usr/bin/java -jar ${gerrit::params::stage_dir}/${gerrit::params::war_file} init -d ${gerrit::params::home}",
+  #   
+  #   default => "/usr/bin/sudo -u ${gerrit::params::user} /usr/bin/java -jar ${gerrit::params::stage_dir}/${gerrit::params::war_file} init -d ${gerrit::params::home} --batch --no-auto-start",
+  # }
   
   $init_script = $::operatingsystem ? {
     default => "/usr/bin/sudo ${gerrit::params::home}/bin/gerrit.sh",

@@ -9,8 +9,14 @@ class gerrit::staging {
 
   staging::file { "${gerrit::params::stage_dir}/${gerrit::params::war_file}" :
     source => $gerrit::params::war_file_url,
-    before => Exec["build_gerrit"],
+    before => File["${gerrit::params::stage_dir}/${gerrit::params::war_file}"],
     require => File[$gerrit::params::stage_dir],
   }
 	
+  file { "${gerrit::params::stage_dir}/${gerrit::params::war_file}" :
+    owner  => $gerrit::params::user,
+    group  => $gerrit::params::group,
+    before => Class['gerrit::db'],
+  }
+  
 }
