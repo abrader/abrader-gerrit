@@ -1,14 +1,16 @@
 class gerrit::db {
-  #include gerrit::params
+  include gerrit::params
   
   notify{"$gerrit::params::database_type": }
   notify{"$::fqdn": }
   
   
   case $gerrit::params::database_type {
+    # Installs H2 DB
     'h2': {
       # Do nothing
     }
+    # Installs Postgres DB
     'postgresql': {
       class { 'postgresql::server': }
       

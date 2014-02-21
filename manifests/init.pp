@@ -27,26 +27,31 @@ class gerrit (
 
   include apache
   include java
+  
+  # TODO: Need to make this work with Tomcat
   #include tomcat
    
   package { 'wget':
     ensure => present,
   }
   
+  # Package necessary for Gerrit operation
   package { 'git':
     ensure => present,
   }
-      
+  
+  # Creates user necessary for Gerrit operation
   user { $gerrit::params::user :
     ensure     => present,
     home       => $gerrit::params::home, 
     managehome => true,
-    before => File[$gerrit::params::home],
+    before     => File[$gerrit::params::home],
   }
   
+  # Creates Gerrit user home directory
   file { $gerrit::params::home :
-    owner => $gerrit::params::user,
-    group => $gerrit::params::group,
+    owner  => $gerrit::params::user,
+    group  => $gerrit::params::group,
     ensure => directory,
     before => File[$gerrit::params::stage_dir],
   }

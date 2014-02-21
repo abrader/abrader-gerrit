@@ -1,12 +1,14 @@
 class gerrit::build {
 	include gerrit::params
   
+  # Creates ~/etc
   file { "${gerrit::params::home}/etc" :
     ensure => directory,
     owner  => $gerrit::params::user,
     group  => $gerrit::params::group,
   }
   
+  # Creates ~/etc/secure.config necessary for Gerrit init
   file { "${gerrit::params::home}/etc/secure.config" :
     ensure => file,
     owner  => $gerrit::params::user,
@@ -19,6 +21,7 @@ class gerrit::build {
     notify  => Exec['build_gerrit'],
   }
   
+  # Creates ~/etc/gerrit.config necessary for Gerrit init
   file { 'gerrit_config' :
     path => "${gerrit::params::home}/etc/gerrit.config",
     owner  => $gerrit::params::user,
@@ -31,6 +34,7 @@ class gerrit::build {
     notify  => Exec['build_gerrit'], 
   }
   
+  # Execution of Gerrit init to build custom war file
   exec { "build_gerrit" :
     cwd       => $gerrit::params::home,
     creates   => "${gerrit::params::home}/bin/gerrit.sh",
