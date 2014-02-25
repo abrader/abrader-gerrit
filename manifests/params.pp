@@ -3,15 +3,15 @@ class gerrit::params {
   $user = $::operatingsystem ? {
     default => 'gerrit2',
   }
-  # Gerrit group 
+  # Gerrit group
   $group = $::operatingsystem ? {
     default => 'gerrit2',
   }
-  # Gerrit Groups 
+  # Gerrit Groups
   $groups = $::operatingsystem ? {
     default => undef,
   }
-  # Gerrit deployment directory 
+  # Gerrit deployment directory
   $home = $::operatingsystem ? {
     default => '/opt/gerrit',
   }
