@@ -1,11 +1,9 @@
 class gerrit::db {
-  include gerrit::params
 
-  notify{$gerrit::params::database_type: }
-  notify{$::fqdn: }
+  notify{ $gerrit::database_type: }
 
 
-  case $gerrit::params::database_type {
+  case $gerrit::database_type {
     # Installs H2 DB
     'h2': {
       # Do nothing
@@ -14,9 +12,9 @@ class gerrit::db {
     'postgresql': {
       class { 'postgresql::server': }
 
-      postgresql::server::db { $gerrit::params::db_name :
-        user     => $gerrit::params::db_user,
-        password => postgresql_password($gerrit::params::db_user, $gerrit::params::db_pass),
+      postgresql::server::db { $gerrit::db_name :
+        user     => $gerrit::db_user,
+        password => postgresql_password($gerrit::db_user, $gerrit::db_pass),
         before   => Class['gerrit::build'],
       }
     }
