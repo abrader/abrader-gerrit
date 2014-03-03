@@ -11,46 +11,44 @@
 # Sample Usage:
 #
 class gerrit (
-  $version              = $gerrit::params::gerrit_version,
-  $group                = $gerrit::params::gerrit_group,
-  $user                 = $gerrit::params::gerrit_user,
-  $groups               = $gerrit::params::gerrit_groups,
-  $home                 = $gerrit::params::gerrit_home,
-  $site_name            = $gerrit::params::gerrit_site_name,
-  $canonical_web_url    = $gerrit::params::canonical_web_url,
-  $sshd_listen_address  = $gerrit::params::sshd_listen_address,
-  $httpd_listen_url     = $gerrit::params::httpd_listen_url,
+  $group                = $gerrit::params::group,
+  $user                 = $gerrit::params::user,
+  $groups               = $gerrit::params::groups,
+  $home                 = $gerrit::params::home,
   $stage_dir            = $gerrit::params::stage_dir,
   $database_type        = $gerrit::params::database_type,
   $war_file             = $gerrit::params::war_file,
+  $manage_java          = false,
 ) inherits gerrit::params {
 
-  include apache
-  include java
-  include git
-  include wget
-
-  # TODO: Need to make this work with Tomcat
-  #include tomcat
-
-  # Creates user necessary for Gerrit operation
-  user { $gerrit::params::user :
+  # Manage user necessary for Gerrit operation
+  user { $user :
     ensure     => present,
-    home       => $gerrit::params::home,
+    home       => $home,
     managehome => true,
-    before     => File[$gerrit::params::home],
+    before     => File[$home],
   }
 
-  # Creates Gerrit user home directory
-  file { $gerrit::params::home :
-    owner  => $gerrit::params::user,
-    group  => $gerrit::params::group,
+  # Manage Gerrit user home directory
+  file { $home :
+    owner  => $user,
+    group  => $group,
     ensure => directory,
-    before => File[$gerrit::params::stage_dir],
+    before => File[$stage_dir],
   }
-
+  file { 'gerrit_defaults':
+    ensure  => file,
+    path    => '/etc/default/gerritcodereview',
+    owner   => root,
+    group   => root,
+    mode    => '0750',
+    content => template('gerrit/gerritcodereview.erb'),
+  }
+  if $manage_java == true {
+    class { 'java': }
+  }
   include gerrit::staging
   include gerrit::db
   include gerrit::build
-  include gerrit::start
+  include gerrit::service
 }
