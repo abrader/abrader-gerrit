@@ -18,7 +18,7 @@ class gerrit (
   $stage_dir            = $gerrit::params::stage_dir,
   $database_type        = $gerrit::params::database_type,
   $war_file             = $gerrit::params::war_file,
-  $manage_java          = false,
+  $manage_java          = $gerrit::params::manage_java,
 ) inherits gerrit::params {
 
   # Manage user necessary for Gerrit operation
@@ -45,10 +45,10 @@ class gerrit (
     content => template('gerrit/gerritcodereview.erb'),
   }
   if $manage_java == true {
-    class { 'java': }
+    class { '::java': }
   }
-  include gerrit::staging
-  include gerrit::db
-  include gerrit::build
-  include gerrit::service
+  include ::gerrit::staging
+  include ::gerrit::db
+  include ::gerrit::build
+  include ::gerrit::service
 }

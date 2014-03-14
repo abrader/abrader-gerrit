@@ -36,5 +36,8 @@ class gerrit::params {
   # Start script
   $init_script = $::operatingsystem ? {
     default => "/usr/bin/sudo -u ${gerrit::params::user} ${gerrit::params::home}/bin/gerrit.sh",
+
+  # install/no install java
+  $manage_java = false
   }
 }

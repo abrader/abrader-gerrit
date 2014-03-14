@@ -1,5 +1,5 @@
 class gerrit::build {
-  include gerrit
+  include ::gerrit
 
   # Manage ~/etc
   file { "${gerrit::home}/etc" :
