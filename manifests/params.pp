@@ -25,7 +25,7 @@ class gerrit::params {
   $database_type = 'postgresql'
 
   # Name of Gerrit war file
-  $war_file = 'gerrit-2.8.1.war'
+  $war_file = 'gerrit-2.8.2.war'
 
   # URL where the Gerrit war file can be found
   $war_file_url = "http://gerrit-releases.storage.googleapis.com/${gerrit::params::war_file}"
